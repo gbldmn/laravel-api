@@ -23,6 +23,9 @@ class ProjectController extends Controller
         ]);
     }
 
+
+    // funzione che richiama lo show per la stampa in vue
+
     public function show($slug){
         
         $aux = Project::with( 'type', 'technologies' )->where('slug', $slug )->first();
