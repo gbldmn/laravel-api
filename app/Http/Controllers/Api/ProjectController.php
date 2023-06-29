@@ -22,4 +22,22 @@ class ProjectController extends Controller
             'projects' => $projects
         ]);
     }
+
+    public function show($slug){
+        
+        $aux = Project::with( 'type', 'technologies' )->where('slug', $slug )->first();
+        
+
+        if( $aux ){
+            return response()->json([
+                'succes' => true,
+                'post' => $aux
+            ]);
+        } else {
+            return response()->json([
+                'succes' => false,
+                'error' => 'non ci sono posts'
+            ]);
+        }
+    }
 }
