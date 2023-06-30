@@ -11,16 +11,23 @@ use App\Models\Project;
 
 class ProjectController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // $projects = Project::all();
 
-        $projects = Project::with( 'type', 'technologies' )->get();
 
-        return response()->json([
-            'succes' => true,
+        if( $request->has( 'type_id' ) ){
+            $projects = Project::with( 'type', 'technologies' )->where( 'type_id', $request->type_id )->get();
+        } else {
+            $projects = Project::with( 'type', 'technologies' )->get();
+        }
+
+         return response()->json([
+            'success' => true,
             'projects' => $projects
         ]);
+
+       
     }
 
 
