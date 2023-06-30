@@ -3,7 +3,7 @@
 use App\Http\Controllers\Api\ProjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Api\TypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +26,5 @@ Route::get( '/projects', [ProjectController::class, 'index']);
 // rotta show per vue
 
 Route::get( '/projects/{slug}', [ProjectController::class, 'show']);
+
+Route::get( '/types', [TypeController::class, 'index']);
