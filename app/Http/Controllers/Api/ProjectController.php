@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 
 
+
 // chiamata api per vue
 
 class ProjectController extends Controller
@@ -17,35 +18,38 @@ class ProjectController extends Controller
 
 
         // if( $request->has( 'type_id' ) ){
-        //     $projects = Project::with( 'type', 'technologies' )->where( 'type_id', $request->type_id )->get();
-        // } else {
+        //      $projects = Project::with( 'type', 'technologies' )->where( 'type_id', $request->type_id )->get();
+        //     } else {
         //     $projects = Project::with( 'type', 'technologies' )->get();
         // }
 
-        //  return response()->json([
+        // return response()->json([
         //     'success' => true,
         //     'projects' => $projects
         // ]);
 
 
-        $query = Project::with(['type', 'technologies']);
+         $query = Project::with(['type', 'technologies']);
 
-        if($request->has('technology_id')){
-            $query->where('technology_id', $request->technology_id);
-        }
+            if($request->has('type_id')){
+             $query->where('type_id', $request->type_id);
+         }
 
-        if( $request->has( 'technologies_id')){
-            $technologyId = explode( ',', $request->technologies_id);
-            $query->whereHas('technologies', function($query) use ($technologyId){
-                $query->whereIn('id', $technologyId);
-            });
-        }
+         if( $request->has( 'technologies_id')){
+             $technologyId = explode( ',', $request->technologies_id);
+             $query->whereHas('technologies', function($query) use ($technologyId){
+                 $query->whereIn('id', $technologyId);
+             });
+         }
 
 
-           return response()->json([
-             'success' => true,
-             'projects' => $projects
-         ]);
+            $projects = $query->get();
+
+
+            return response()->json([
+              'success' => true,
+              'projects' => $projects
+          ]);
        
     }
 

@@ -15,7 +15,7 @@ class TechnologyController extends Controller
      */
     public function index()
     {
-        $technology = Technology::all();
+        $technologies = Technology::all();
 
         return response()->json([
             'success' => true,
@@ -25,7 +25,7 @@ class TechnologyController extends Controller
     }
 
     
-    }
+}
 
 
 
