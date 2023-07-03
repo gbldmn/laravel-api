@@ -10,7 +10,7 @@ class TypeController extends Controller
 {
     public function index()
     {
-        $types = Type::all();
+        $types = Tp::all();
 
         return response()->json([
             'success' => true,

@@ -16,17 +16,36 @@ class ProjectController extends Controller
         // $projects = Project::all();
 
 
-        if( $request->has( 'type_id' ) ){
-            $projects = Project::with( 'type', 'technologies' )->where( 'type_id', $request->type_id )->get();
-        } else {
-            $projects = Project::with( 'type', 'technologies' )->get();
+        // if( $request->has( 'type_id' ) ){
+        //     $projects = Project::with( 'type', 'technologies' )->where( 'type_id', $request->type_id )->get();
+        // } else {
+        //     $projects = Project::with( 'type', 'technologies' )->get();
+        // }
+
+        //  return response()->json([
+        //     'success' => true,
+        //     'projects' => $projects
+        // ]);
+
+
+        $query = Project::with(['type', 'technologies']);
+
+        if($request->has('technology_id')){
+            $query->where('technology_id', $request->technology_id);
         }
 
-         return response()->json([
-            'success' => true,
-            'projects' => $projects
-        ]);
+        if( $request->has( 'technologies_id')){
+            $technologyId = explode( ',', $request->technologies_id);
+            $query->whereHas('technologies', function($query) use ($technologyId){
+                $query->whereIn('id', $technologyId);
+            });
+        }
 
+
+           return response()->json([
+             'success' => true,
+             'projects' => $projects
+         ]);
        
     }
 
